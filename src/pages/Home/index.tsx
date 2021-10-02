@@ -1,6 +1,5 @@
 import {
   Button,
-  Container,
   Flex,
   Heading,
   Input,
@@ -14,9 +13,12 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 
 import { SearchIcon } from '@chakra-ui/icons';
 import SearchService from '../../services/SearchService';
+import { useHistory } from 'react-router';
 
 function Home() {
   const [search, setSearch] = useState('');
+
+  const history = useHistory();
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { value } = event.target;
@@ -29,6 +31,8 @@ function Home() {
 
     if (!search) return;
 
+    return redirectToResultsPage();
+
     try {
       const results = await SearchService.searchBooks(search);
 
@@ -38,65 +42,63 @@ function Home() {
     }
   }
 
-  return (
-    <Container maxWidth="container.xl">
-      <Flex
-        h="100vh"
-        direction="column"
-        align="center"
-        as="form"
-        onSubmit={event => handleSubmit(event)}
-      >
-        <Spacer />
-        <Heading as="h1" fontSize={['4rem', '6rem']} isTruncated>
-          Bookle
-        </Heading>
-        <InputGroup marginTop={8} maxWidth="xl" size="lg">
-          <InputLeftElement
-            pointerEvents="none"
-            children={<SearchIcon color="gray.300" />}
-          />
-          <Input
-            placeholder="Pesquise por título, autor ou assunto."
-            bgColor="white"
-            borderRadius="full"
-            size="lg"
-            focusBorderColor="sand.300"
-            value={search}
-            onChange={handleChange}
-          />
-        </InputGroup>
+  function redirectToResultsPage() {
+    history.push(`/results?query=${search}`);
+  }
 
-        <Button
-          marginTop={6}
-          colorScheme="sand"
-          color="white"
-          width={['full', '3xs']}
-          type="submit"
+  return (
+    <Flex
+      h="100vh"
+      direction="column"
+      align="center"
+      as="form"
+      onSubmit={event => handleSubmit(event)}
+    >
+      <Spacer />
+      <Heading as="h1" fontSize={['4rem', '6rem']} isTruncated>
+        Bookle
+      </Heading>
+      <InputGroup marginTop={8} maxWidth="xl" size="lg">
+        <InputLeftElement
+          pointerEvents="none"
+          children={<SearchIcon color="gray.300" />}
+        />
+        <Input
+          placeholder="Pesquise por título, autor ou assunto."
+          bgColor="white"
+          borderRadius="full"
+          size="lg"
+          focusBorderColor="sand.300"
+          value={search}
+          onChange={handleChange}
+        />
+      </InputGroup>
+
+      <Button
+        marginTop={6}
+        colorScheme="sand"
+        color="white"
+        width={['full', '3xs']}
+        type="submit"
+      >
+        Pesquisa Bookle
+      </Button>
+      <Text marginTop={6} fontSize="sm" color="gray.500">
+        Desenvolvido com 🖤 by{' '}
+        <Link
+          color="sand.600"
+          href="https://www.linkedin.com/in/erijsfernandes/"
+          isExternal
         >
-          Pesquisa Bookle
-        </Button>
-        <Text marginTop={6} fontSize="sm" color="gray.500">
-          Desenvolvido com 🖤 by{' '}
-          <Link
-            color="sand.600"
-            href="https://www.linkedin.com/in/erijsfernandes/"
-            isExternal
-          >
-            Eri JS
-          </Link>{' '}
-          -{' '}
-          <Link
-            color="sand.600"
-            href="https://github.com/EriJohnson"
-            isExternal
-          >
-            Github
-          </Link>
-        </Text>
-        <Spacer />
-      </Flex>
-    </Container>
+          Eri JS
+        </Link>{' '}
+        -{' '}
+        <Link color="sand.600" href="https://github.com/EriJohnson" isExternal>
+          Github
+        </Link>
+      </Text>
+      <Spacer />
+    </Flex>
   );
 }
 
