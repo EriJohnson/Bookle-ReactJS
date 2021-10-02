@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { App } from './App';
+import App from './App';
 import { ColorModeScript } from '@chakra-ui/react';
 import ReactDOM from 'react-dom';
 
