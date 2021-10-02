@@ -1,0 +1,50 @@
+{
+  "extends": ["react-app", "plugin:prettier/recommended"],
+  "rules": {
+    "prettier/prettier": ["error", { "endOfLine": "auto" }],
+    "arrow-body-style": "off",
+    "prefer-arrow-callback": "off",
+    "semi": ["error", "always"],
+    "eqeqeq": "error",
+    "no-empty": "error",
+    "no-empty-function": "warn",
+    "no-empty-pattern": "error",
+    "no-var": "error",
+    "no-undefined": "warn",
+    "no-use-before-define": "error",
+    "no-else-return": "error",
+    "no-redeclare": "error",
+    "no-unreachable": "off",
+    "no-magic-numbers": "off",
+    "no-unused-vars": "warn",
+    "no-useless-computed-key": "error",
+    "no-lonely-if": "warn",
+    "import/no-anonymous-default-export": [
+      "off",
+      {
+        "allowArray": false,
+        "allowArrowFunction": false,
+        "allowAnonymousClass": false,
+        "allowAnonymousFunction": false,
+        "allowCallExpression": true,
+        "allowLiteral": false,
+        "allowObject": false
+      }
+    ],
+    "no-unused-expressions": "warn"
+  },
+
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": ["prettier"]
+}
