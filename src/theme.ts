@@ -13,6 +13,18 @@ const theme = extendTheme({
     primary: '#DAAA63',
     secondary: '#2C1810',
     backgroundColor: '#E5E5E5',
+    sand: {
+      '50': '#FAF4EA',
+      '100': '#F1E0C5',
+      '200': '#E9CBA0',
+      '300': '#E0B77B',
+      '400': '#D7A356',
+      '500': '#CE8F31',
+      '600': '#A57227',
+      '700': '#7C561D',
+      '800': '#523914',
+      '900': '#291D0A',
+    },
   },
   styles: {
     global: {
