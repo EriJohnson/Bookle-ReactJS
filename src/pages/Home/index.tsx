@@ -10,10 +10,19 @@ import {
   Spacer,
   Text,
 } from '@chakra-ui/react';
+import { ChangeEvent, useState } from 'react';
 
 import { SearchIcon } from '@chakra-ui/icons';
 
 function Home() {
+  const [search, setSearch] = useState('');
+
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    const { value } = event.target;
+
+    setSearch(value);
+  }
+
   return (
     <Container maxWidth="container.xl">
       <Flex h="100vh" direction="column" align="center">
@@ -32,10 +41,17 @@ function Home() {
             borderRadius="full"
             size="lg"
             focusBorderColor="sand.300"
+            value={search}
+            onChange={handleChange}
           />
         </InputGroup>
 
-        <Button marginTop={6} colorScheme="sand" color="white">
+        <Button
+          marginTop={6}
+          colorScheme="sand"
+          color="white"
+          width={['full', '3xs']}
+        >
           Pesquisa Bookle
         </Button>
         <Text marginTop={6} fontSize="sm" color="gray.500">
