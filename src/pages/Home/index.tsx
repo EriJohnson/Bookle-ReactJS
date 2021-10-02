@@ -10,9 +10,10 @@ import {
   Spacer,
   Text,
 } from '@chakra-ui/react';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 
 import { SearchIcon } from '@chakra-ui/icons';
+import SearchService from '../../services/SearchService';
 
 function Home() {
   const [search, setSearch] = useState('');
@@ -23,9 +24,29 @@ function Home() {
     setSearch(value);
   }
 
+  async function handleSubmit(event: FormEvent<HTMLDivElement>) {
+    event.preventDefault();
+
+    if (!search) return;
+
+    try {
+      const results = await SearchService.searchBooks(search);
+
+      console.log(`results`, results);
+    } catch (error) {
+      console.log(`error`, error);
+    }
+  }
+
   return (
     <Container maxWidth="container.xl">
-      <Flex h="100vh" direction="column" align="center">
+      <Flex
+        h="100vh"
+        direction="column"
+        align="center"
+        as="form"
+        onSubmit={event => handleSubmit(event)}
+      >
         <Spacer />
         <Heading as="h1" fontSize={['4rem', '6rem']} isTruncated>
           Bookle
@@ -51,6 +72,7 @@ function Home() {
           colorScheme="sand"
           color="white"
           width={['full', '3xs']}
+          type="submit"
         >
           Pesquisa Bookle
         </Button>
