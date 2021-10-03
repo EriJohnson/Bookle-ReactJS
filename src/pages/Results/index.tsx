@@ -19,9 +19,23 @@ import SearchService from '../../services/SearchService';
 import { useHistory } from 'react-router';
 import useQuery from '../../hooks/useQuery';
 
+const MAX_RESULTS = 10;
+interface IBook {
+  id: string;
+  volumeInfo: {
+    title: string;
+    authors: string[];
+    description: string;
+    imageLinks?: {
+      thumbnail: string;
+    };
+    publishedDate: string;
+  };
+}
+
 function Results() {
   const [isLoading, setIsLoading] = useState(true);
-  const [books, setBooks] = useState([]);
+  const [books, setBooks] = useState<IBook[]>([]);
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -38,7 +52,7 @@ function Results() {
 
           if (response) {
             setBooks(response.items);
-            setPageCount(response.totalItems / 10);
+            setPageCount(response.totalItems / MAX_RESULTS);
           }
         } catch (error) {
           console.log(`error`, error);
