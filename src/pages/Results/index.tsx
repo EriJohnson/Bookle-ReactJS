@@ -14,24 +14,13 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
+import IBook from '../../types/Book';
 import Paginate from '../../components/Paginate';
 import SearchService from '../../services/SearchService';
 import { useHistory } from 'react-router';
 import useQuery from '../../hooks/useQuery';
 
 const MAX_RESULTS = 10;
-interface IBook {
-  id: string;
-  volumeInfo: {
-    title: string;
-    authors: string[];
-    description: string;
-    imageLinks?: {
-      thumbnail: string;
-    };
-    publishedDate: string;
-  };
-}
 
 function Results() {
   const [isLoading, setIsLoading] = useState(true);
