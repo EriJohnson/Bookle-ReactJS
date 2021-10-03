@@ -5,7 +5,9 @@ export default {
     try {
       const response = await Axios.get(`volumes?q=${query}`);
 
-      return response.data;
+      const { items } = response.data;
+
+      return items;
     } catch (error) {
       console.log(`error`, error);
     }
