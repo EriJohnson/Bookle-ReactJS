@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  list-style-type: none;
+  font-weight: 500;
+  color: #2c1810;
+}
+
+.pageClassName {
+  font-size: 1rem;
+  padding: 0 0.5rem;
+}
+
+.activePagination {
+  color: #ce8f31;
+}
