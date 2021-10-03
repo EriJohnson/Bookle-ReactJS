@@ -5,19 +5,18 @@ import {
   HStack,
   Heading,
   Image,
-  Link,
   List,
   ListItem,
   Spinner,
   Text,
   VStack,
 } from '@chakra-ui/react';
+import { Link, useHistory } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import IBook from '../../types/Book';
 import Paginate from '../../components/Paginate';
 import SearchService from '../../services/SearchService';
-import { useHistory } from 'react-router';
 import useQuery from '../../hooks/useQuery';
 
 const MAX_RESULTS = 10;
@@ -26,7 +25,7 @@ function Results() {
   const [isLoading, setIsLoading] = useState(true);
   const [books, setBooks] = useState<IBook[]>([]);
   const [pageCount, setPageCount] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
 
   const query = useQuery('q');
   const page = useQuery('page');
@@ -37,7 +36,7 @@ function Results() {
     (async () => {
       if (query) {
         try {
-          const response = await SearchService.searchBooks(query, currentPage);
+          const response = await SearchService.index(query, currentPage);
 
           if (response) {
             setBooks(response.items);
@@ -53,6 +52,8 @@ function Results() {
   }, [currentPage, query]);
 
   useEffect(() => {
+    if (Number(page) < 0) return setCurrentPage(0);
+
     setCurrentPage(Number(page) - 1);
   }, [page]);
 
@@ -60,6 +61,10 @@ function Results() {
     setIsLoading(true);
 
     history.push(`/results?q=${query}&page=${selected + 1}`);
+  }
+
+  function redirectToDetailsPage(bookId) {
+    history.push(`/results/${bookId}`);
   }
 
   return (
@@ -76,12 +81,14 @@ function Results() {
                     <Image
                       objectFit="cover"
                       src={book?.volumeInfo?.imageLinks?.thumbnail}
+                      cursor="pointer"
+                      onClick={() => redirectToDetailsPage(book.id)}
                     />
                   )}
 
                   <VStack align="flex-start" spacing={4}>
                     <VStack align="flex-start">
-                      <Link>
+                      <Link to={`/results/${book.id}`}>
                         <Heading size="md">{book?.volumeInfo?.title}</Heading>
                       </Link>
 
@@ -96,6 +103,7 @@ function Results() {
                         {book?.volumeInfo?.description}
                       </Text>
                       <Button
+                        onClick={() => redirectToDetailsPage(book.id)}
                         colorScheme="sand"
                         borderRadius="full"
                         variant="outline"

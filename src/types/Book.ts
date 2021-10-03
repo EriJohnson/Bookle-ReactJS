@@ -1,4 +1,4 @@
-export interface IBook {
+interface IBook {
   id: string;
   volumeInfo: {
     title: string;
@@ -10,3 +10,5 @@ export interface IBook {
     publishedDate: string;
   };
 }
+
+export default IBook;

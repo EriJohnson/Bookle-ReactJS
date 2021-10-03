@@ -1,5 +1,6 @@
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 
+import Details from './pages/Details';
 import Home from './pages/Home';
 import Results from './pages/Results';
 
@@ -11,8 +12,12 @@ function Routes() {
           <Home />
         </Route>
 
-        <Route path="/results">
+        <Route exact path="/results">
           <Results />
+        </Route>
+
+        <Route path="/results/:id">
+          <Details />
         </Route>
       </Switch>
     </Router>
