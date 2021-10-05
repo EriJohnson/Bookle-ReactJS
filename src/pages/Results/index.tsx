@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Container,
   Flex,
@@ -12,9 +13,11 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { Link, useHistory } from 'react-router-dom';
+import { Skeleton, SkeletonText } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
 import IBook from '../../types/Book';
+import ListSkeleton from '../../components/Skeletons/ListSkeleton';
 import Paginate from '../../components/Paginate';
 import SearchService from '../../services/SearchService';
 import useQuery from '../../hooks/useQuery';
@@ -70,59 +73,77 @@ function Results() {
   return (
     <Container maxWidth="container.md">
       <Flex h="100vh" direction="column" align="center" as="form">
-        {isLoading && <Spinner size="xl" color="sand.600" m="auto" />}
+        <List width="full" spacing={10} py={16}>
+          {books?.map(book => (
+            <ListItem key={book.id}>
+              <HStack align="flex-start" spacing={4}>
+                {book?.volumeInfo?.imageLinks?.thumbnail && (
+                  <Box flex={1}>
+                    <Skeleton isLoaded={!isLoading}>
+                      <Image
+                        objectFit="cover"
+                        w="100%"
+                        maxH="256px"
+                        src={book?.volumeInfo?.imageLinks?.thumbnail}
+                        cursor="pointer"
+                        onClick={() => redirectToDetailsPage(book.id)}
+                      />
+                    </Skeleton>
+                  </Box>
+                )}
 
-        {!isLoading && books?.length > 0 && (
-          <List width="full" spacing={8} py={16}>
-            {books?.map(book => (
-              <ListItem key={book.id}>
-                <HStack align="flex-start" spacing={4}>
-                  {book?.volumeInfo?.imageLinks?.thumbnail && (
-                    <Image
-                      objectFit="cover"
-                      src={book?.volumeInfo?.imageLinks?.thumbnail}
-                      cursor="pointer"
-                      onClick={() => redirectToDetailsPage(book.id)}
-                    />
-                  )}
-
+                <Box flex={4}>
                   <VStack align="flex-start" spacing={4}>
                     <VStack align="flex-start">
-                      <Link to={`/results/${book.id}`}>
-                        <Heading size="md">{book?.volumeInfo?.title}</Heading>
-                      </Link>
+                      <Skeleton isLoaded={!isLoading}>
+                        <Link to={`/results/${book.id}`}>
+                          <Heading size="md">{book?.volumeInfo?.title}</Heading>
+                        </Link>
+                      </Skeleton>
 
                       <Heading size="sm" color="gray.600">
-                        {book?.volumeInfo?.authors?.[0]} ·{' '}
-                        {book?.volumeInfo?.publishedDate}
+                        <SkeletonText noOfLines={2} isLoaded={!isLoading}>
+                          {book?.volumeInfo?.authors?.[0]} ·{' '}
+                          {book?.volumeInfo?.publishedDate}
+                        </SkeletonText>
                       </Heading>
                     </VStack>
 
                     <VStack align="flex-start" spacing={4}>
-                      <Text noOfLines={[2, 3]}>
-                        {book?.volumeInfo?.description}
-                      </Text>
-                      <Button
-                        onClick={() => redirectToDetailsPage(book.id)}
-                        colorScheme="sand"
-                        borderRadius="full"
-                        variant="outline"
-                        size="sm"
-                      >
-                        Visualizar
-                      </Button>
+                      <SkeletonText noOfLines={[2, 3]} isLoaded={!isLoading}>
+                        {book?.volumeInfo?.description && (
+                          <Text noOfLines={[2, 3]}>
+                            {book?.volumeInfo?.description}
+                          </Text>
+                        )}
+                      </SkeletonText>
+
+                      <Skeleton isLoaded={!isLoading}>
+                        <Button
+                          onClick={() => redirectToDetailsPage(book.id)}
+                          colorScheme="sand"
+                          borderRadius="full"
+                          variant="outline"
+                          size="sm"
+                        >
+                          Visualizar
+                        </Button>
+                      </Skeleton>
                     </VStack>
                   </VStack>
-                </HStack>
-              </ListItem>
-            ))}
+                </Box>
+              </HStack>
+            </ListItem>
+          ))}
+
+          {!isLoading && (
             <Paginate
               pageCount={pageCount}
               onPageChange={handlePageChange}
               initialPage={currentPage}
             />
-          </List>
-        )}
+          )}
+        </List>
       </Flex>
     </Container>
   );
