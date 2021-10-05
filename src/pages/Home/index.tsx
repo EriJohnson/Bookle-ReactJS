@@ -35,7 +35,7 @@ function Home() {
   }
 
   function redirectToResultsPage() {
-    history.push(`/results?q=${search}&page=1`);
+    history.push(`/books?q=${search}&page=1`);
   }
 
   return (

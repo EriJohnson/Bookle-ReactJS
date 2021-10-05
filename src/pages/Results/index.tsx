@@ -1,23 +1,10 @@
-import {
-  Box,
-  Button,
-  Container,
-  Flex,
-  HStack,
-  Heading,
-  Image,
-  List,
-  ListItem,
-  Spinner,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
+import { Box, Container, Flex, HStack, VStack } from '@chakra-ui/react';
+import { Button, Heading, Image, List, ListItem, Text } from '@chakra-ui/react';
 import { Link, useHistory } from 'react-router-dom';
 import { Skeleton, SkeletonText } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
 import IBook from '../../types/Book';
-import ListSkeleton from '../../components/Skeletons/ListSkeleton';
 import Paginate from '../../components/Paginate';
 import SearchService from '../../services/SearchService';
 import useQuery from '../../hooks/useQuery';
@@ -63,11 +50,11 @@ function Results() {
   function handlePageChange({ selected }) {
     setIsLoading(true);
 
-    history.push(`/results?q=${query}&page=${selected + 1}`);
+    history.push(`/books?q=${query}&page=${selected + 1}`);
   }
 
   function redirectToDetailsPage(bookId) {
-    history.push(`/results/${bookId}`);
+    history.push(`/books/${bookId}`);
   }
 
   return (
@@ -96,7 +83,7 @@ function Results() {
                   <VStack align="flex-start" spacing={4}>
                     <VStack align="flex-start">
                       <Skeleton isLoaded={!isLoading}>
-                        <Link to={`/results/${book.id}`}>
+                        <Link to={`/books/${book.id}`}>
                           <Heading size="md">{book?.volumeInfo?.title}</Heading>
                         </Link>
                       </Skeleton>

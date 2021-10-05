@@ -12,11 +12,11 @@ function Routes() {
           <Home />
         </Route>
 
-        <Route exact path="/results">
+        <Route exact path="/books">
           <Results />
         </Route>
 
-        <Route path="/results/:id">
+        <Route path="/books/:id">
           <Details />
         </Route>
       </Switch>
