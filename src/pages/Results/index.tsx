@@ -47,8 +47,12 @@ function Results() {
     setCurrentPage(Number(page) - 1);
   }, [page]);
 
+  const scrollToTop = () => window.scrollTo(0, 0);
+
   function handlePageChange({ selected }) {
     setIsLoading(true);
+
+    scrollToTop();
 
     history.push(`/books?q=${query}&page=${selected + 1}`);
   }
