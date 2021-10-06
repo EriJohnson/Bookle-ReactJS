@@ -42,7 +42,7 @@ function Results() {
   }, [currentPage, query]);
 
   useEffect(() => {
-    if (Number(page) < 0) return setCurrentPage(0);
+    if (Number(page) < 0) return;
 
     setCurrentPage(Number(page) - 1);
   }, [page]);
