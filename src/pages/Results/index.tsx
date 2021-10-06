@@ -4,17 +4,13 @@ import { Link, useHistory } from 'react-router-dom';
 import { Skeleton, SkeletonText } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
-import IBook from '../../types/Book';
 import Paginate from '../../components/Paginate';
-import SearchService from '../../services/SearchService';
+import useFetchBooks from '../../hooks/useFetchBooks';
 import useQuery from '../../hooks/useQuery';
 
-const MAX_RESULTS = 10;
+const scrollToTop = () => window.scrollTo(0, 0);
 
 function Results() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [books, setBooks] = useState<IBook[]>([]);
-  const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
 
   const query = useQuery('q');
@@ -22,32 +18,16 @@ function Results() {
 
   const history = useHistory();
 
-  useEffect(() => {
-    (async () => {
-      if (query) {
-        try {
-          const response = await SearchService.index(query, currentPage);
-
-          if (response) {
-            setBooks(response.items);
-            setPageCount(response.totalItems / MAX_RESULTS);
-          }
-        } catch (error) {
-          console.log(`error`, error);
-        } finally {
-          setIsLoading(false);
-        }
-      }
-    })();
-  }, [currentPage, query]);
+  const { books, isLoading, setIsLoading, pageCount } = useFetchBooks(
+    query,
+    currentPage
+  );
 
   useEffect(() => {
     if (Number(page) < 0) return;
 
     setCurrentPage(Number(page) - 1);
   }, [page]);
-
-  const scrollToTop = () => window.scrollTo(0, 0);
 
   function handlePageChange({ selected }) {
     setIsLoading(true);

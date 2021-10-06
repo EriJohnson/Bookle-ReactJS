@@ -1,6 +1,6 @@
 import { Container, Flex, Heading, Spinner } from '@chakra-ui/react';
 
-import useFetchBookDetails from './useFetchBookDetails';
+import useFetchBookDetails from '../../hooks/useFetchBookDetails';
 import { useParams } from 'react-router';
 
 function Details() {

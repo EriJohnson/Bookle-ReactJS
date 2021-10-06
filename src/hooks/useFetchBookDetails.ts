@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import IBook from '../../types/Book';
-import SearchService from '../../services/SearchService';
+import IBook from '../types/Book';
+import SearchService from '../services/SearchService';
 
 function useFetchBookDetails(id: string) {
   const [book, setBook] = useState<IBook | null>(null);
@@ -23,7 +23,7 @@ function useFetchBookDetails(id: string) {
         }
       }
     })();
-  }, [book, id, isLoading]);
+  }, [id]);
 
   return { book, isLoading };
 }
