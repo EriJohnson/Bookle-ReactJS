@@ -5,10 +5,12 @@ import SearchService from '../services/SearchService';
 
 const MAX_RESULTS = 10;
 
-function useFetchBooks(query: string, currentPage: number) {
+function useFetchBooks(query: string, currentPage: string) {
   const [isLoading, setIsLoading] = useState(true);
   const [books, setBooks] = useState<IBook[]>([]);
   const [pageCount, setPageCount] = useState(0);
+
+  console.log(`currentPage`, currentPage);
 
   useEffect(() => {
     (async () => {

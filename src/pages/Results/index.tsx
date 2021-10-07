@@ -11,7 +11,7 @@ import useQuery from '../../hooks/useQuery';
 const scrollToTop = () => window.scrollTo(0, 0);
 
 function Results() {
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const query = useQuery('q');
   const page = useQuery('page');
@@ -20,7 +20,7 @@ function Results() {
 
   const { books, isLoading, setIsLoading, pageCount } = useFetchBooks(
     query,
-    currentPage
+    page
   );
 
   useEffect(() => {
@@ -43,7 +43,7 @@ function Results() {
 
   return (
     <Container maxWidth="container.md">
-      <Flex h="100vh" direction="column" align="center" as="form">
+      <Flex h="100vh" direction="column" align="center">
         <List width="full" spacing={10} py={16}>
           {books?.map(book => (
             <ListItem key={book.id}>
