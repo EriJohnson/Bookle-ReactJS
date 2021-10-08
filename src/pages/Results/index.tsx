@@ -37,7 +37,7 @@ function Results() {
     history.push(`/books?q=${query}&page=${selected + 1}`);
   }
 
-  function redirectToDetailsPage(bookId) {
+  function redirectToDetailsPage(bookId: string) {
     history.push(`/books/${bookId}`);
   }
 

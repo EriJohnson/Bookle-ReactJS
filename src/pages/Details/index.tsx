@@ -18,7 +18,7 @@ function Details() {
 
       {!isLoading && (
         <Stack direction={['column', 'column', 'row']} spacing={8}>
-          <Box flex={1} p={[16, 0]}>
+          <Box flex={1} p={[4, 0]}>
             <Image
               objectFit="cover"
               w="100%"

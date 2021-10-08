@@ -2,6 +2,7 @@ import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 
 import Details from './pages/Details';
 import Home from './pages/Home';
+import { Redirect } from 'react-router-dom';
 import Results from './pages/Results';
 
 function Routes() {
@@ -19,6 +20,8 @@ function Routes() {
         <Route path="/books/:id">
           <Details />
         </Route>
+
+        <Redirect to="/" />
       </Switch>
     </Router>
   );
